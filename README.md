@@ -1,46 +1,91 @@
-## Dokumentasi Arsitektur Antarmuka Pengguna (UI)
 
-Pengembangan antarmuka pengguna pada proyek Finebank diimplementasikan menggunakan pendekatan metodologi **Atomic Design**. Paradigma ini diterapkan untuk memastikan skalabilitas, tingkat penggunaan ulang (_reusability_), dan modularitas kode yang sistematis. Struktur antarmuka diklasifikasikan ke dalam empat tingkat hierarki komponen sebagai berikut:
+## Struktur Arsitektur UI (Antarmuka Pengguna)
+
+Untuk membangun antarmuka di aplikasi Finebank, kami mengadopsi metodologi **Atomic Design**. Pendekatan ini dipilih agar kode UI menjadi lebih rapi, modular, mudah diskalakan, dan komponennya bisa digunakan berulang kali (*reusable*). Berdasarkan metode tersebut, struktur UI kami bagi menjadi empat tingkatan utama:
 
 ### 1. Elements
 
-Merupakan unit struktural paling fundamental dan indivisible (tidak dapat dipecah lagi) yang menjadi blok pembangun utama antarmuka aplikasi.
+Ini adalah komponen dasar atau unit terkecil yang tidak bisa dipecah lagi. Elemen-elemen ini bertindak sebagai pondasi utama pembentuk antarmuka.
 
-- **`Button`**: Komponen tombol interaktif dengan dukungan variasi _state_.
-- **`Input`**: Komponen _field_ untuk penerimaan data teks dari pengguna.
-- **`Label`**: Komponen teks deskriptif yang terikat pada elemen _input_.
-- **`LabeledInput`**: Komponen gabungan fundamental yang mengintegrasikan `Label` dan `Input`.
-- **`CheckBox`**: Komponen elemen _toggle_ untuk pemilihan biner atau persetujuan syarat.
-- **`Logo`**: Komponen representasi identitas visual entitas Finebank.IO.
-- **`Icon`**: Entitas grafis vektor untuk navigasi dan aksi (_Overview_, _Transaction_, _Settings_, dll.).
-- **`Card`**: Komponen dasar pembungkus konten terisolasi dengan dukungan kapabilitas _Dark Mode_ terintegrasi.
-- **`AppSnackbar`**: Komponen transien untuk menampilkan umpan balik atau notifikasi sistem kepada pengguna.
+* **`Button`**: Tombol interaktif yang memiliki berbagai macam bentuk atau *state*.
+
+
+* **`Input`**: Kolom bagi pengguna untuk mengetikkan atau memasukkan data teks.
+
+
+* **`Label`**: Teks keterangan deskriptif yang biasanya menempel pada elemen input.
+
+
+* **`LabeledInput`**: Komponen gabungan yang menyatukan `Label` dan `Input` ke dalam satu kesatuan.
+
+
+* **`CheckBox`**: Kotak centang untuk pilihan biner (ya/tidak) atau untuk menyetujui sesuatu.
+
+
+* **`Logo`**: Gambar atau ikon yang menjadi representasi identitas merek Finebank.IO.
+
+
+* **`Icon`**: Elemen grafis vektor (seperti ikon *Overview*, *Transaction*, *Settings*) pendukung navigasi atau aksi.
+
+
+* **`Card`**: Wadah dasar untuk menampung konten tertentu, yang juga sudah mendukung fitur *Dark Mode*.
+
+
+* **`AppSnackbar`**: Pesan *pop-up* sementara untuk memberikan notifikasi atau respons sistem kepada pengguna.
+
+
 
 ### 2. Fragments
 
-Merupakan entitas struktural gabungan (mewakili konsep _Molecules_ dan _Organisms_ pada _Atomic Design_) yang mengintegrasikan beberapa _Elements_ untuk membentuk satu kesatuan fungsionalitas UI yang spesifik dan independen.
+Tingkatan ini setara dengan konsep *Molecules* dan *Organisms* dalam Atomic Design. Bagian ini merupakan gabungan dari beberapa *Elements* yang membentuk sebuah fungsi UI mandiri dan spesifik.
 
-- **`FormSignIn`**: Fragmen formulir autentikasi masuk, merangkum input kredensial pengguna dan tombol aksi.
-- **`FormSignUp`**: Fragmen formulir registrasi entitas pengguna baru.
-- **`CardBalance`**: Fragmen representasi visual akumulasi saldo pengguna.
-- **`CardExpense`**: Fragmen indikator metrik ringkasan pengeluaran.
-- **`CardExpenseBreakdown`**: Fragmen analitik yang merincikan kategorisasi pengeluaran finansial.
-- **`CardGoal`**: Fragmen pemantauan progres target pencapaian finansial.
-- **`CardRecentTransaction`**: Fragmen daftar log riwayat transaksi kronologis.
-- **`CardStatistic`**: Fragmen representasi grafis komparatif untuk statistik transaksi mingguan.
-- **`CardUpcomingBill`**: Fragmen daftar kewajiban tagihan terencana.
+* **`FormSignIn`**: Kumpulan elemen (seperti input dan tombol) yang membentuk form untuk proses login.
+
+
+* **`FormSignUp`**: Kumpulan elemen yang dikhususkan untuk form pendaftaran akun pengguna baru.
+
+
+* **`CardBalance`**: Tampilan visual yang menunjukkan jumlah saldo milik pengguna.
+
+
+* **`CardExpense`**: Tampilan ringkas mengenai metrik atau indikator pengeluaran.
+
+
+* **`CardExpenseBreakdown`**: Tampilan analitik untuk menjabarkan detail pengeluaran berdasarkan kategorinya.
+
+
+* **`CardGoal`**: Tampilan untuk memantau sejauh mana kemajuan target keuangan pengguna.
+
+
+* **`CardRecentTransaction`**: Komponen yang berisi daftar riwayat transaksi secara berurutan.
+
+
+* **`CardStatistic`**: Tampilan grafik untuk membandingkan statistik transaksi mingguan.
+
+
+* **`CardUpcomingBill`**: Tampilan daftar tagihan mendatang yang harus dibayar.
+
+
 
 ### 3. Layouts
 
-Merupakan struktur kerangka spasial (_Templates_) yang mendikte tata letak dan penempatan _Fragments_ serta fungsionalitas penyedia konteks global.
+Berperan sebagai kerangka tata letak atau *Templates* yang mengatur penempatan komponen-komponen *Fragments*. Tingkat ini juga mengatur fungsionalitas yang berlaku secara global di aplikasi.
 
-- **`AuthLayout`**: Kerangka tata letak terpusat yang didedikasikan untuk proses autentikasi (meliputi halaman masuk dan registrasi). Tata letak ini mendukung sinkronisasi manajemen _state_ mode terang/gelap (_Dark Mode_).
-- **`MainLayout`**: Kerangka tata letak operasional pasca-autentikasi. Mengelola tata ruang matriks dasbor, bilah navigasi samping (_Sidebar_), _Header_ profil pengguna, serta mendistribusikan _context_ tema warna dinamis dan _Dark Mode_ ke seluruh komponen turunan.
+* **`AuthLayout`**: Kerangka tata letak yang posisinya terpusat, khusus untuk halaman autentikasi (login dan register). Layout ini juga sudah mendukung manajemen mode terang dan gelap (*Dark Mode*).
+
+
+* **`MainLayout`**: Kerangka tata letak utama setelah pengguna berhasil login. Komponen ini mengatur letak matriks dasbor, menu navigasi samping (*Sidebar*), *Header* profil pengguna, serta mendistribusikan pengaturan tema dinamis dan *Dark Mode* ke seluruh komponen di dalamnya.
+
+
 
 ### 4. Pages
 
-Merupakan hierarki tertinggi berupa instansiasi spesifik dari _Layouts_ yang telah diinjeksikan dengan representasi data konkret, dirancang untuk melayani rute (_routes_) navigasi spesifik pada aplikasi.
+Tingkatan paling atas dan spesifik dalam hierarki. Ini berupa *Layouts* yang sudah disuntikkan dengan data konkret dan siap ditampilkan pada rute URL tertentu di aplikasi.
 
-- **`SignIn`**: Halaman rute autentikasi awal bagi pengguna terdaftar.
-- **`SignUp`**: Halaman rute pendaftaran identitas pengguna baru.
-- **`Dashboard`** / **`Overview`**: Halaman antarmuka utama yang menyajikan agregasi data finansial secara holistik kepada pengguna pasca-autentikasi.
+* **`SignIn`**: Halaman rute awal khusus bagi pengguna lama yang ingin masuk atau login.
+
+
+* **`SignUp`**: Halaman rute khusus untuk proses pendaftaran pengguna baru.
+
+
+* **`Dashboard` / `Overview**`: Halaman utama (setelah login) yang menyajikan seluruh kumpulan data metrik keuangan pengguna secara lengkap.
